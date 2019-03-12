@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import './App.css';
-import Hunt from './components/hunt'
+import './App.scss';
+import Hunt from './components/Hunt'
 
 class App extends Component {
   render() {
