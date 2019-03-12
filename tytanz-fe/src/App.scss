@@ -8,7 +8,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #485368;
   min-height: 100vh;
   display: flex;
   flex-direction: row;
@@ -35,11 +35,23 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  /* display: inline; */
 }
 
 .small-div {
   display: inline;
-  margin: 10vw;
-  padding: 5vw;
+  margin: 5vw;
+  
+  &--hunter {
+    background-color: aquamarine;
+    padding: 5vw;
+    color: black;
+    border: 5px solid green;
+  }
+  &--quarry {
+    background-color: coral;
+    padding: 5vw;
+    color: black;
+    border: 5px solid orangered;
+
+  }
 }

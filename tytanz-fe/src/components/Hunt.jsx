@@ -1,8 +1,9 @@
 import React from 'react';
 // import { Switch, Route } from 'react-router-dom'
 
-import Attack from './attack'
+import Attack from './AttackButton'
 import NewGame from './NewGame'
+import DisplayCard from './DisplayCard';
 
 
 export default class Hunt extends React.Component{
@@ -66,22 +67,16 @@ export default class Hunt extends React.Component{
     )
   }
 
-  displayUnits = () => {
-    const hunter = this.state.hunter
-    const quarry = this. state.quarry
-    console.log(this.state)
+  displayUnit = (unitType) => {
+    const unit = this.state[unitType]
     return(
-      <div id='encasing-div' className="encasing-div">
-      <div id='hunter-div' className="small-div">
-      <p>{hunter.name}</p>
-      <p>Health: {hunter.stats.health}</p>
-      <p>Attack: {hunter.stats.attack}</p>
-      </div>
-      <div id='quarry-div' className="small-div">
-      <p>{quarry.name}</p>
-      <p>Health: {quarry.stats.health}</p>
-      <p>Attack: {quarry.stats.attack}</p>
-      </div>
+      <div id={unitType + "-div"} className="small-div">
+        <DisplayCard
+          name={unit.name}
+          health={unit.stats.health}
+          attack={unit.stats.attack}
+          type={unitType}
+           />
       </div>
     )
   }
@@ -91,7 +86,6 @@ export default class Hunt extends React.Component{
     const quarryHealth = this.state.quarry.stats.health
 
     let newHealth = quarryHealth - hunterDamage
-    console.log(newHealth)
 
     this.setState(prevState => (
       {...prevState,
@@ -113,8 +107,7 @@ export default class Hunt extends React.Component{
   gameOn = () => {
     return(
       <div>
-      {this.displayUnits()}
-      <Attack doThing={this.hunterAttack}/>
+      <Attack hunterAttack={this.hunterAttack}/>
       {this.goHunting()}
       </div>
     )
@@ -123,7 +116,26 @@ export default class Hunt extends React.Component{
   gameOff = () => {
     return(
       <div>
-      <NewGame doThing={this.resetGame}/>
+      <NewGame resetGame={this.resetGame}/>
+      </div>
+    )
+  }
+
+  gameState = () => {
+    return (
+      <div>
+        <div className="encasing-div">
+          {this.displayUnit('hunter')}
+          {this.displayUnit('quarry')}
+        </div>
+        <div>
+          {
+            this.state.victory ?
+            this.gameOff()
+            :
+            this.gameOn()
+          }
+        </div>
       </div>
     )
   }
@@ -148,11 +160,7 @@ export default class Hunt extends React.Component{
   render () {
     return (
       <div>
-      { this.state.victory ?
-        this.gameOff()
-        :
-        this.gameOn()
-}
+        { this.gameState() }
       </div>
     )
   }
